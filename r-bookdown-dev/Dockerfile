@@ -39,6 +39,7 @@ RUN apt-get update -qq \
                 r-cran-devtools \
                 r-cran-ggplot2 \
                 r-cran-tidyr \
+                r-cran-bookdown \
         && echo 'options(repos = c(CRAN = "https://cloud.r-project.org"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
         && rm -rf /var/lib/apt/lists/*
 
