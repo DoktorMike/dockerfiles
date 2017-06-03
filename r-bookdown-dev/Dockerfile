@@ -16,10 +16,10 @@ RUN apt-get install -y --no-install-recommends \
                 vim \
         && rm -rf /var/lib/apt/lists/*
 
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
+## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen en_US.utf8 && /usr/sbin/update-locale LANG=en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
 
 RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)/" \
         && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
