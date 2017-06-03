@@ -1,6 +1,6 @@
 FROM docker.io/ubuntu:16.04
 
-MAINTAINER Jan Gorecki j.gorecki@wit.edu.pl
+MAINTAINER Michael Green j.gorecki@wit.edu.pl
 
 RUN apt-get update -qq \
         && apt-get upgrade -y
