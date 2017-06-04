@@ -44,6 +44,13 @@ RUN apt-get update -qq \
         && echo 'options(repos = c(CRAN = "https://cloud.r-project.org"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
         && rm -rf /var/lib/apt/lists/*
 
+# LAtex
+RUN apt-get update -qq \
+        && apt-get install -y --no-install-recommends \
+                texlive \
+                texlive-xetex \
+        && rm -rf /var/lib/apt/lists/*
+
 # Now install R and littler, and create a link for littler in /usr/local/bin
 # Also set a default CRAN repo, and make sure littler knows about it too
 # Note 1: we need wget here as the build env is too old to work with libcurl (we think, precise was)
