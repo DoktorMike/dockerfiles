@@ -39,8 +39,29 @@ RUN apt-get update -qq \
                 r-cran-devtools \
                 r-cran-ggplot2 \
                 r-cran-tidyr \
-                r-cran-bookdown \
+                pandoc \
+                pandoc-citeproc \
         && echo 'options(repos = c(CRAN = "https://cloud.r-project.org"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
         && rm -rf /var/lib/apt/lists/*
+
+# Now install R and littler, and create a link for littler in /usr/local/bin
+# Also set a default CRAN repo, and make sure littler knows about it too
+# Note 1: we need wget here as the build env is too old to work with libcurl (we think, precise was)
+# Note 2: r-cran-docopt is not currently in c2d4u so we install from source
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    littler r-cran-stringr r-cran-rcpp r-cran-rstan \
+	&& echo 'options(repos = c(CRAN = "https://cran.rstudio.com/"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
+	&& ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \
+	&& ln -s /usr/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+	&& ln -s /usr/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+	&& ln -s /usr/lib/R/site-library/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r \
+	&& install.r docopt \
+	&& rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Bookdown specifics
+RUN Rscript -e 'devtools::install_github("rstudio/bookdown")' \
+  && wget -c https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb \
+  && dpkg -i pandoc-1.19.2.1-1-amd64.deb
 
 CMD ["R"]
