@@ -1,8 +1,19 @@
-FROM buildpack-deps:jessie-scm
+FROM buildpack-deps:xenial-curl
 MAINTAINER "Michael Green" micke.green@gmail.com
 
 RUN groupadd -r perl6 && useradd -r -g perl6 perl6
 RUN useradd docker && mkdir /home/docker && chown docker:docker /home/docker && addgroup docker staff
+
+# procps is very common in build systems, and is a reasonably small package
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		bzr \
+		git \
+		mercurial \
+		openssh-client \
+		subversion \
+		\
+		procps \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
