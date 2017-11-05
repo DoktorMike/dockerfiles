@@ -40,6 +40,9 @@ RUN apt-get update -qq \
                 r-cran-ggplot2 \
                 r-cran-tidyr \
                 r-cran-rmarkdown \
+                r-cran-readr \
+                r-cran-igraph \
+                r-cran-diagrammer \
                 pandoc \
         && echo 'options(repos = c(CRAN = "https://cloud.r-project.org"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
         && rm -rf /var/lib/apt/lists/*
