@@ -76,7 +76,7 @@ RUN Rscript -e 'devtools::install_github("rstudio/bookdown")' \
   && dpkg -i pandoc-1.19.2.1-1-amd64.deb
 
 # Extra packages for R
-RUN Rscript -e 'devtools::install_github("rstudio/bookdown")' \
+RUN Rscript -e 'install.packages("tidyverse")' \
     && Rscript -e 'devtools::install_github("DoktorMike/datools")' \
 
 
