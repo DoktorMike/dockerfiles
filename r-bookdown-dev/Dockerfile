@@ -43,6 +43,7 @@ RUN apt-get update -qq \
                 r-cran-readr \
                 r-cran-igraph \
                 r-cran-diagrammer \
+                r-cran-stringi \
                 pandoc \
         && echo 'options(repos = c(CRAN = "https://cloud.r-project.org"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site \
         && rm -rf /var/lib/apt/lists/*
@@ -73,5 +74,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN Rscript -e 'devtools::install_github("rstudio/bookdown")' \
   && wget -c https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb \
   && dpkg -i pandoc-1.19.2.1-1-amd64.deb
+
+# Extra packages for R
+RUN Rscript -e 'devtools::install_github("rstudio/bookdown")' \
+    && Rscript -e 'devtools::install_github("DoktorMike/datools")' \
+
+
+
 
 CMD ["R"]
