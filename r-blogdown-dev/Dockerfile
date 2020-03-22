@@ -27,3 +27,12 @@ RUN install2.r --error --deps TRUE \
 
 RUN install2.r --error --deps TRUE \
         DiagrammeR
+
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends \
+        libgdal-dev \
+        && install2.r --error --deps TRUE \
+        brms
+
+RUN install2.r --error --deps TRUE \
+        plotly
