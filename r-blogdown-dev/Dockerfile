@@ -3,7 +3,8 @@ FROM rocker/verse:3.6.2
 RUN apt-get update \
         && apt-get install -y --no-install-recommends \
         pandoc \
-        r-base
+        r-base \
+        libudunits2-dev
 
 RUN install2.r --error --deps TRUE \
         DiagrammeR \
